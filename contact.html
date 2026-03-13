@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — OrbLitter</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#F9F6F1;--gold:#B8975A;--gold-light:#D4B07A;
+  --ink:#1A1814;--ink-light:#3A3530;--grey:#7A756C;
+  --cream:#EDE8DF;--card-bg:#F2EEE8;--white:#FFFFFF;--radius:18px;
+}
+body{background:var(--ivory);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300}
+nav{position:sticky;top:0;z-index:100;background:rgba(249,246,241,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,151,90,0.15);display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-logo::after{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%}
+.contact-section{max-width:600px;margin:0 auto;padding:60px 24px}
+.contact-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.contact-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold)}
+.contact-title{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;line-height:1.1;margin-bottom:16px}
+.contact-title em{font-style:italic;color:var(--gold)}
+.contact-desc{font-size:15px;color:var(--grey);line-height:1.7;margin-bottom:40px}
+.contact-form{display:flex;flex-direction:column;gap:20px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-group label{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-light)}
+.form-group input,.form-group textarea,.form-group select{background:var(--card-bg);border:1px solid rgba(184,151,90,0.2);border-radius:12px;padding:14px 16px;font-family:'Outfit',sans-serif;font-size:15px;font-weight:300;color:var(--ink);outline:none;transition:border 0.2s;width:100%}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{min-height:140px;resize:vertical}
+.btn-submit{background:var(--gold);color:var(--ivory);border:none;padding:17px 24px;border-radius:60px;font-size:13px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background 0.2s;width:100%}
+.btn-submit:hover{background:var(--gold-light)}
+.contact-info{margin-top:48px;padding-top:32px;border-top:1px solid rgba(184,151,90,0.2)}
+.contact-info p{font-size:14px;color:var(--grey);line-height:1.7}
+.contact-info a{color:var(--gold);text-decoration:none}
+footer{background:var(--ink);padding:32px 24px;color:rgba(249,246,241,0.3);font-size:11px;letter-spacing:0.5px;text-align:center;margin-top:80px}
+@media(min-width:768px){
+  .contact-section{padding:80px 24px}
+  .contact-title{font-size:64px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">OrbLitter</a>
+</nav>
+
+<div class="contact-section">
+  <div class="contact-eyebrow">Nous contacter</div>
+  <h1 class="contact-title">Une question ?<br><em>Écrivez-nous.</em></h1>
+  <p class="contact-desc">Notre équipe vous répond sous 24h, du lundi au vendredi. Pour toute question sur votre commande, la livraison ou le produit.</p>
+
+  <form class="contact-form" action="mailto:orblitter@gmail.com" method="POST" enctype="text/plain">
+    <div class="form-group">
+      <label>Nom complet</label>
+      <input type="text" name="nom" placeholder="Jean Dupont" required>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" placeholder="jean@exemple.com" required>
+    </div>
+    <div class="form-group">
+      <label>Sujet</label>
+      <select name="sujet">
+        <option value="commande">Ma commande</option>
+        <option value="produit">Question produit</option>
+        <option value="retour">Retour / Remboursement</option>
+        <option value="garantie">Garantie</option>
+        <option value="autre">Autre</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea name="message" placeholder="Décrivez votre demande..." required></textarea>
+    </div>
+    <button type="submit" class="btn-submit">Envoyer le message</button>
+  </form>
+
+  <div class="contact-info">
+    <p>Vous pouvez aussi nous écrire directement à <a href="mailto:orblitter@gmail.com">orblitter@gmail.com</a><br>
+    Réponse garantie sous 24h ouvrées.</p>
+  </div>
+</div>
+
+<footer>© 2026 OrbLitter · Tous droits réservés · orblitter.fr</footer>
+
+</body>
+</html>
