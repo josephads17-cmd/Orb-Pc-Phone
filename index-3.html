@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrbLitter — Litière Automatique Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ivory:#F9F6F1;
+  --gold:#B8975A;
+  --gold-light:#D4B07A;
+  --ink:#1A1814;
+  --ink-light:#3A3530;
+  --grey:#7A756C;
+  --grey-light:#C8C0B4;
+  --cream:#EDE8DF;
+  --card-bg:#F2EEE8;
+  --white:#FFFFFF;
+  --radius:18px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--ivory);color:var(--ink);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden}
+
+/* ── ANNOUNCEMENT BAR ── */
+.announcement{background:var(--ink);color:var(--ivory);text-align:center;padding:10px 16px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.announcement a{color:var(--gold);text-decoration:underline}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:rgba(249,246,241,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(184,151,90,0.15);display:flex;justify-content:space-between;align-items:center;padding:14px 20px}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px}
+.nav-logo::after{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%}
+.nav-icons{display:flex;gap:16px;align-items:center}
+.nav-icons svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.5;cursor:pointer}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,24,20,0.1) 0%,rgba(26,24,20,0.55) 100%)}
+.hero-content{position:absolute;bottom:0;left:0;right:0;color:var(--ivory)}
+.hero-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--gold-light)}
+.hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;line-height:1.1;margin-bottom:16px}
+.hero-title em{font-style:italic;color:var(--gold-light)}
+.hero-sub{font-size:14px;line-height:1.7;color:rgba(249,246,241,0.75);margin-bottom:28px}
+.btn-hero{display:block;background:var(--gold);color:var(--ivory);text-align:center;padding:17px 24px;border-radius:60px;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background 0.2s}
+.btn-hero:hover{background:var(--gold-light)}
+.hero-price-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(249,246,241,0.12);border:1px solid rgba(249,246,241,0.2);border-radius:40px;padding:8px 16px;margin-bottom:20px;backdrop-filter:blur(8px)}
+.hero-price-pill span{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--ivory)}
+.hero-price-pill small{font-size:11px;color:rgba(249,246,241,0.6);letter-spacing:1px}
+
+/* ── TRUST BAR ── */
+.trust-bar{background:var(--cream);padding:16px 20px;display:flex;justify-content:space-around;align-items:center;border-bottom:1px solid rgba(184,151,90,0.15)}
+.trust-item{text-align:center}
+.trust-num{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--ink)}
+.trust-label{font-size:10px;letter-spacing:1px;color:var(--grey);text-transform:uppercase}
+
+/* ── SECTION COMMONS ── */
+.section{padding:40px 20px}
+.section-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'';width:20px;height:1px;background:var(--gold)}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;line-height:1.15;color:var(--ink);margin-bottom:8px}
+.section-title em{font-style:italic;color:var(--gold)}
+.section-desc{font-size:14px;line-height:1.8;color:var(--grey)}
+
+/* ── CARDS ── */
+.card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;margin-bottom:16px}
+.card-img{width:100%;height:240px;object-fit:cover;display:block}
+.card-body{padding:20px}
+.card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:8px}
+.card-desc{font-size:13.5px;line-height:1.75;color:var(--grey)}
+
+/* ── FEATURES CARDS ── */
+.features-section{background:var(--ivory);padding:40px 20px}
+.feature-card{background:var(--card-bg);border-radius:var(--radius);padding:24px;margin-bottom:14px;display:flex;align-items:flex-start;gap:18px}
+.feature-icon{width:44px;height:44px;background:var(--ink);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feature-icon svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.feature-text h3{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--ink);margin-bottom:5px}
+.feature-text p{font-size:13px;line-height:1.7;color:var(--grey)}
+
+/* ── PROOF SECTION ── */
+.proof-section{background:var(--ink);padding:40px 20px;text-align:center}
+.proof-section .section-eyebrow{justify-content:center;color:var(--gold-light)}
+.proof-section .section-eyebrow::before{background:var(--gold-light)}
+.proof-section .section-title{color:var(--ivory)}
+.stars{color:var(--gold);font-size:20px;letter-spacing:2px;margin:20px 0 8px}
+.proof-count{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:var(--ivory);line-height:1}
+.proof-count-label{font-size:12px;letter-spacing:2px;color:rgba(249,246,241,0.5);text-transform:uppercase;margin-bottom:32px}
+
+/* ── REVIEWS ── */
+.reviews-section{padding:40px 20px;background:var(--ivory)}
+.review-scroll{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin-top:24px;padding-bottom:8px}
+.review-scroll::-webkit-scrollbar{display:none}
+.review-card{flex-shrink:0;width:280px;background:var(--card-bg);border-radius:var(--radius);padding:22px}
+.review-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:10px}
+.review-text{font-size:13.5px;line-height:1.75;color:var(--ink-light);margin-bottom:14px;font-style:italic}
+.review-author{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey)}
+
+/* ── ROOM TABS ── */
+.rooms-section{padding:40px 20px;background:var(--white)}
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:20px 0 16px;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:10px 20px;border-radius:60px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--grey-light);color:var(--grey);background:transparent;font-family:'Outfit',sans-serif}
+.tab.active{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.room-img{width:100%;object-fit:cover;object-position:center bottom;border-radius:var(--radius);display:none}
+.room-img.active{display:block}
+
+/* ── FAQ ── */
+.faq-section{background:var(--ink);padding:40px 20px;border-radius:24px 24px 0 0;margin-top:8px}
+.faq-section .section-title{color:var(--ivory);margin-bottom:4px}
+.faq-section .section-desc{color:rgba(249,246,241,0.5);font-size:13px;margin-bottom:28px}
+.faq-list{background:var(--ivory);border-radius:16px;overflow:hidden}
+.faq-item{border-bottom:1px solid rgba(184,151,90,0.15)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{width:100%;background:none;border:none;padding:20px;text-align:left;font-family:'Outfit',sans-serif;font-size:14px;font-weight:500;color:var(--ink);display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:12px}
+.faq-arrow{color:var(--gold);font-size:18px;flex-shrink:0;transition:transform 0.25s}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding:0 20px}
+.faq-item.open .faq-a{max-height:200px;padding:0 20px 20px}
+.faq-a p{font-size:13.5px;line-height:1.75;color:var(--grey)}
+
+/* ── GUARANTEE ── */
+.guarantee-section{padding:40px 20px;background:var(--ivory)}
+.guarantee-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.g-card{background:var(--card-bg);border-radius:16px;padding:20px;text-align:center}
+.g-card-icon{font-size:28px;margin-bottom:10px}
+.g-card-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:5px}
+.g-card-desc{font-size:12px;line-height:1.6;color:var(--grey)}
+
+/* ── FINAL CTA ── */
+.final-cta{background:var(--cream);padding:48px 24px;text-align:center}
+.final-cta .section-eyebrow{justify-content:center}
+.final-cta .section-title{margin-bottom:8px}
+.final-cta .section-desc{margin-bottom:28px;margin-left:auto;margin-right:auto}
+.price-display{font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--ink);line-height:1;margin-bottom:4px}
+.price-display sup{vertical-align:super;color:var(--gold)}
+.price-note{font-size:11px;letter-spacing:1.5px;color:var(--grey);text-transform:uppercase;margin-bottom:28px}
+.btn-final{display:block;background:var(--ink);color:var(--ivory);padding:18px 24px;border-radius:60px;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;font-weight:500;margin-bottom:20px;transition:background 0.2s}
+.btn-final:hover{background:var(--gold)}
+.shipping-badges{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.s-badge{font-size:11px;color:var(--grey);padding:6px 12px;background:var(--white);border-radius:20px;letter-spacing:0.5px}
+
+/* ── KLARNA BAR ── */
+.klarna-bar{background:var(--card-bg);border-radius:var(--radius);padding:18px 20px;margin:0 20px 16px;display:flex;align-items:center;gap:16px}
+.klarna-badge{background:#FFB3C7;color:#17120E;font-size:13px;font-weight:700;padding:6px 12px;border-radius:8px;letter-spacing:0.5px;flex-shrink:0}
+.klarna-text{font-size:13px;color:var(--grey);line-height:1.4}
+.klarna-text strong{color:var(--ink);display:block;font-size:15px}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:40px 24px 32px;color:rgba(249,246,241,0.5)}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--ivory);margin-bottom:24px}
+.footer-links{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.footer-links a{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(249,246,241,0.5);text-decoration:none}
+.footer-copy{font-size:11px;color:rgba(249,246,241,0.3);letter-spacing:0.5px}
+
+/* ── ANIMATIONS ── */
+.fade-up{opacity:1;transform:none;transition:opacity 0.55s ease,transform 0.55s ease}
+.fade-up.animate{opacity:0;transform:translateY(24px)}
+.fade-up.animate.visible{opacity:1;transform:none}
+
+/* ═══════════════════════════════════════
+   MOBILE STYLES (< 768px) — base
+═══════════════════════════════════════ */
+@media (max-width: 767px) {
+  body{max-width:480px;margin:0 auto}
+  .hero{height:88vh;min-height:580px}
+  .hero-content{padding:32px 24px 40px}
+  .hero-title{font-size:42px}
+  .hero-sub{max-width:340px}
+  .hero-price-pill span{font-size:28px}
+  .room-img{height:320px}
+  .price-display{font-size:64px}
+  .price-display sup{font-size:28px}
+  .final-cta .section-desc{max-width:320px}
+  .cta-sticky{position:sticky;bottom:20px;padding:0 20px;z-index:50;pointer-events:none}
+  .cta-sticky a{display:block;background:var(--ink);color:var(--ivory);text-align:center;padding:17px;border-radius:60px;font-size:12px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;font-weight:500;box-shadow:0 8px 32px rgba(26,24,20,0.3);pointer-events:all;transition:background 0.2s}
+  .cta-sticky a:hover{background:var(--gold)}
+  .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .how-card-img{height:220px}
+}
+
+/* ═══════════════════════════════════════
+   DESKTOP STYLES (≥ 768px)
+═══════════════════════════════════════ */
+@media (min-width: 768px) {
+  .vidange-img-wrap { display: none; }
+  /* Global container */
+  .container{max-width:1200px;margin:0 auto;padding:0 48px}
+  
+  nav{padding:18px 48px}
+  .nav-logo{font-size:22px}
+
+  /* Hero */
+  .hero{height:100vh;min-height:700px}
+  .hero-content{padding:0 80px 72px;max-width:640px}
+  .hero-title{font-size:72px}
+  .hero-sub{font-size:16px;max-width:420px}
+  .hero-price-pill span{font-size:38px}
+  .btn-hero{display:inline-block;padding:18px 48px}
+
+  /* Trust bar */
+  .trust-bar{padding:24px 80px}
+  .trust-num{font-size:28px}
+  .trust-label{font-size:11px}
+
+  /* Klarna */
+  .klarna-bar{margin:0 48px 20px;max-width:500px}
+
+  /* Section commons */
+  .section{padding:80px 80px}
+  .section-title{font-size:48px}
+  .features-section{padding:80px 80px}
+
+  /* How it works grid */
+  .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .how-card-img{height:280px}
+
+  /* Feature cards: 2 columns */
+  .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .feature-card{margin-bottom:0}
+
+  /* Rooms */
+  .rooms-section{padding:80px 80px}
+  .room-img{height:520px}
+
+  /* Proof */
+  .proof-section{padding:80px}
+  .proof-count{font-size:80px}
+
+  /* Reviews */
+  .reviews-section{padding:80px}
+  .review-card{width:360px}
+
+  /* FAQ */
+  .faq-section{padding:80px}
+  .faq-section-inner{max-width:800px;margin:0 auto}
+
+  /* Guarantee */
+  .guarantee-section{padding:80px}
+  .guarantee-cards{grid-template-columns:1fr 1fr 1fr 1fr;gap:20px}
+
+  /* Reassurance cards: 3 col */
+  .reassurance-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}
+
+  /* Final CTA */
+  .final-cta{padding:100px 48px}
+  .price-display{font-size:96px}
+  .price-display sup{font-size:42px}
+  .final-cta .section-desc{max-width:480px}
+  .btn-final{display:inline-block;padding:20px 72px;font-size:14px}
+
+  /* Footer */
+  footer{padding:64px 80px 48px}
+  .footer-inner{display:flex;justify-content:space-between;align-items:flex-start;gap:40px}
+  .footer-links{margin-bottom:0}
+
+  /* Steps: 2 col */
+  .steps-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+
+  /* Hide mobile sticky CTA */
+  .cta-sticky{display:none !important;pointer-events:none !important;}
+}
+
+@media (min-width:1100px){
+  .how-grid{grid-template-columns:1fr 1fr 1fr 1fr}
+  .how-card-img{height:300px}
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT -->
+<div class="announcement">
+  Livraison offerte · Expédié sous 48h · <a href="https://buy.stripe.com/bJefZhggVbWh5fReDD2Fa00">Commander →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">OrbLitter</a>
+  <div class="nav-icons">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398345/Chat_Bengal_sur_le_balcon_parisien_yudgdr.png" alt="OrbLitter sur balcon parisien">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Litière Automatique Premium</div>
+    <h1 class="hero-title">Avant vous la cachiez.<br><em>Maintenant</em><br>vous l'exposez.</h1>
+    <p class="hero-sub">La première litière automatique que vous serez fier de montrer à vos invités.</p>
+    <div class="hero-price-pill">
+      <span>349€</span>
+      <small>Livraison offerte</small>
+    </div>
+    <a href="https://buy.stripe.com/bJefZhggVbWh5fReDD2Fa00" class="btn-hero">Commander maintenant</a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-num">≤40 dB</div>
+    <div class="trust-label">Ultra-silencieux</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">9L</div>
+    <div class="trust-label">Bac à déchets</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">2 ans</div>
+    <div class="trust-label">Garantie</div>
+  </div>
+</div>
+
+<!-- KLARNA -->
+<div style="height:20px"></div>
+<div class="klarna-bar fade-up">
+  <div class="klarna-badge">Klarna</div>
+  <div class="klarna-text">
+    <strong>3 × 116€ sans frais</strong>
+    Payez en plusieurs fois facilement
+  </div>
+</div>
+
+<!-- COMMENT CA MARCHE -->
+<section style="padding:40px 20px;background:var(--white)" class="how-section">
+  <div class="section-eyebrow fade-up">Le principe</div>
+  <h2 class="section-title fade-up">OrbLitter, comment<br>ça <em>marche</em> ?</h2>
+  <p class="section-desc fade-up" style="margin-bottom:28px">Une technologie invisible, un résultat immédiat.</p>
+
+  <div class="how-grid">
+    <div class="fade-up" style="background:var(--card-bg);border-radius:16px;overflow:hidden">
+      <div class="how-card-img" style="overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398778/ChatGPT_Image_5_mars_2026_%C3%A0_16_13_43_xrtvhl.png" style="width:100%;height:100%;object-fit:cover;object-position:center" alt="Chat Bengal sortant de l'OrbLitter">
+      </div>
+      <div style="padding:14px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:6px">Ne ramassez plus jamais</div>
+        <div style="font-size:12px;line-height:1.65;color:var(--grey)">OrbLitter filtre automatiquement les déchets après chaque passage.</div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="background:var(--card-bg);border-radius:16px;overflow:hidden">
+      <div class="how-card-img" style="overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398328/ChatGPT_Image_3_mars_2026_%C3%A0_13_42_40_epecib.png" style="width:100%;height:100%;object-fit:cover;object-position:center" alt="Contrôle des odeurs OrbLitter">
+      </div>
+      <div style="padding:14px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:6px">Contrôle des odeurs</div>
+        <div style="font-size:12px;line-height:1.65;color:var(--grey)">Bac hermétique scellé — les odeurs restent enfermées, votre intérieur reste frais.</div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="background:var(--card-bg);border-radius:16px;overflow:hidden">
+      <div class="how-card-img" style="overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398328/ChatGPT_Image_3_mars_2026_%C3%A0_13_52_03_i22pgq.png" style="width:100%;height:100%;object-fit:cover;object-position:center" alt="Suivez l'activité de votre chat">
+      </div>
+      <div style="padding:14px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:6px">Suivez son activité</div>
+        <div style="font-size:12px;line-height:1.65;color:var(--grey)">Poids, visites, alertes tiroir plein — tout depuis votre téléphone.</div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="background:var(--card-bg);border-radius:16px;overflow:hidden">
+      <div class="how-card-img" style="overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398536/ChatGPT_Image_5_mars_2026_%C3%A0_16_28_00_dtfpmn.png" style="width:100%;height:100%;object-fit:cover;object-position:center top" alt="Idéal pour 1 à 4 chats">
+      </div>
+      <div style="padding:14px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:6px">Idéal 1 à 4 chats</div>
+        <div style="font-size:12px;line-height:1.65;color:var(--grey)">Un seul OrbLitter suffit pour plusieurs chats — plus besoin de multiples bacs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES CARDS -->
+<section class="features-section">
+  <div class="section-eyebrow fade-up">Pourquoi OrbLitter</div>
+  <h2 class="section-title fade-up">La technologie au<br>service du <em>silence</em></h2>
+
+  <div class="features-grid" style="margin-top:28px">
+    <div class="feature-card fade-up">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      </div>
+      <div class="feature-text">
+        <h3>Silence absolu la nuit</h3>
+        <p>Moteur ultra-silencieux ≤ 40 dB — moins qu'un murmure. Se déclenche automatiquement après chaque passage.</p>
+      </div>
+    </div>
+
+    <div class="feature-card fade-up">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+      </div>
+      <div class="feature-text">
+        <h3>Connectée à votre vie</h3>
+        <p>Suivez la santé de votre chat en temps réel — poids, fréquence des visites. Contrôlez tout depuis l'appli.</p>
+      </div>
+    </div>
+
+    <div class="feature-card fade-up">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <div class="feature-text">
+        <h3>S'intègre partout</h3>
+        <p>Sa forme sculptée en ABS blanc mat se fond dans tout intérieur — parquet, mobilier, appartement haussmannien.</p>
+      </div>
+    </div>
+
+    <div class="feature-card fade-up">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </div>
+      <div class="feature-text">
+        <h3>Vidange en 4 gestes</h3>
+        <p>Appuyez, retirez, rincez, replacez. Moins de 90 secondes. Conçu pour ceux qui ont autre chose à faire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDANGE 4 GESTES -->
+<section class="section" style="background:var(--white);padding-top:8px">
+  <div class="section-eyebrow fade-up">Simple &amp; intuitif</div>
+  <h2 class="section-title fade-up">Vidange en<br><em>4 gestes</em></h2>
+  <p class="section-desc fade-up" style="margin-bottom:24px">Toute la litière usagée est récupérée en quelques secondes via le panneau tactile ou l'application.</p>
+
+  <div class="fade-up vidange-img-wrap" style="border-radius:16px;overflow:hidden;margin-bottom:20px">
+    <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398328/ChatGPT_Image_5_mars_2026_%C3%A0_17_19_57_sezobg.png" style="width:100%;display:block;max-height:500px;object-fit:cover;object-position:center 75%" alt="Vidange en 4 gestes">
+  </div>
+
+  <div class="steps-grid fade-up">
+    <div style="background:var(--card-bg);border-radius:16px;padding:20px;display:flex;align-items:flex-start;gap:16px">
+      <div style="min-width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ivory);font-weight:400">1</span>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:4px">Appuyez sur le panneau tactile</div>
+        <div style="font-size:13px;color:var(--grey);line-height:1.6">Un simple appui déclenche le cycle de nettoyage automatique.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg);border-radius:16px;padding:20px;display:flex;align-items:flex-start;gap:16px">
+      <div style="min-width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ivory);font-weight:400">2</span>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:4px">Retirez le tiroir à déchets</div>
+        <div style="font-size:13px;color:var(--grey);line-height:1.6">Le tiroir coulissant recueille proprement toute la litière usagée dans un sac hermétique.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg);border-radius:16px;padding:20px;display:flex;align-items:flex-start;gap:16px">
+      <div style="min-width:36px;height:36px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ivory);font-weight:400">3</span>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:4px">Insérez un nouveau sac</div>
+        <div style="font-size:13px;color:var(--grey);line-height:1.6">Glissez un sac standard dans le tiroir — aucun consommable propriétaire requis.</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg);border-radius:16px;padding:20px;display:flex;align-items:flex-start;gap:16px">
+      <div style="min-width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ivory);font-weight:400">4</span>
+      </div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:4px">Refermez — c'est prêt</div>
+        <div style="font-size:13px;color:var(--grey);line-height:1.6">Moins de 90 secondes en tout. OrbLitter reprend son cycle automatiquement.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA MID PAGE -->
+<div style="padding:0 20px 32px;background:var(--white);text-align:center">
+  <a href="https://buy.stripe.com/bJefZhggVbWh5fReDD2Fa00" class="btn-final fade-up" style="max-width:480px;margin:0 auto">Ajouter au panier — 349€</a>
+</div>
+
+
+
+<!-- ROOMS TABS -->
+<section class="rooms-section">
+  <div class="section-eyebrow">Chez vous</div>
+  <h2 class="section-title">OrbLitter s'adapte<br>à <em>tous</em> les intérieurs</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="switchRoom(this,'salon')">Salon</button>
+    <button class="tab" onclick="switchRoom(this,'chambre')">Chambre</button>
+    <button class="tab" onclick="switchRoom(this,'couloir')">Couloir</button>
+    <button class="tab" onclick="switchRoom(this,'bureau')">Bureau</button>
+  </div>
+  <img class="room-img active" data-room="salon" src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398327/ChatGPT_Image_3_mars_2026_%C3%A0_13_30_23_dxmpla.png" alt="Salon" style="object-position:center 70%">
+  <img class="room-img" data-room="chambre" src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773398328/ChatGPT_Image_3_mars_2026_%C3%A0_13_36_33_mvzfxj.png" alt="Chambre" style="object-position:center 50%">
+  <img class="room-img" data-room="couloir" src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773399181/ChatGPT_Image_5_mars_2026_%C3%A0_16_51_33_atgdde.png" alt="Couloir">
+  <img class="room-img" data-room="bureau" src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773399215/ChatGPT_Image_5_mars_2026_%C3%A0_16_54_54_c6xqfp.png" alt="Bureau">
+</section>
+
+<!-- PROOF -->
+<section class="proof-section">
+  <div class="section-eyebrow fade-up">Ils ont adopté OrbLitter</div>
+  <h2 class="section-title fade-up">Rejoignez des milliers<br>de <em>propriétaires</em> satisfaits</h2>
+  <div class="stars fade-up">★★★★★</div>
+  <div class="proof-count fade-up">4.9/5</div>
+  <div class="proof-count-label fade-up">Note moyenne · +1 200 avis</div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="section-eyebrow fade-up">Témoignages</div>
+  <h2 class="section-title fade-up">Ce qu'en disent<br>nos <em>clients</em></h2>
+  <div class="review-scroll">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">« Enfin une litière qui ne dépare pas dans mon appartement. Le design est vraiment bluffant pour le prix. »</p>
+      <div class="review-author">Camille D. — Paris 11e</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">« Mon chat l'a adoptée en 20 minutes. Je ne l'entends même pas la nuit. L'application est super bien faite. »</p>
+      <div class="review-author">Thomas M. — Lyon</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">« J'ai longtemps hésité mais ça vaut vraiment chaque euro. La vidange prend littéralement 90 secondes. »</p>
+      <div class="review-author">Lucie P. — Bordeaux</div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">« Mes invités pensent que c'est une sculpture design. Personne ne devine que c'est une litière. »</p>
+      <div class="review-author">Marc A. — Marseille</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-section-inner">
+    <div class="section-eyebrow" style="color:var(--gold-light);justify-content:left">Questions fréquentes</div>
+    <h2 class="section-title" style="color:var(--ivory)">Tout ce que vous<br><em>voulez</em> savoir</h2>
+    <p class="section-desc" style="color:rgba(249,246,241,0.5);margin-bottom:28px">Réponses à vos questions avant commande.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Mon chat l'utilisera-t-il vraiment ? <span class="faq-arrow">⌄</span></button>
+        <div class="faq-a"><p>La grande majorité des chats s'adaptent en moins de 48h. La forme sphérique rassure naturellement les félins. Nos retours clients confirment une adoption rapide dans 95% des cas.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">OrbLitter élimine-t-il vraiment les odeurs ? <span class="faq-arrow">⌄</span></button>
+        <div class="faq-a"><p>Oui. Le bac à déchets hermétique scellé isole complètement les odeurs. Combiné au cycle automatique après chaque passage, votre intérieur reste frais en permanence.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quelle litière utiliser ? <span class="faq-arrow">⌄</span></button>
+        <div class="faq-a"><p>OrbLitter est compatible avec toutes les litières agglomérantes classiques. Pas besoin d'acheter une litière spéciale — utilisez celle que votre chat connaît déjà.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Est-ce que le moteur peut blesser mon chat ? <span class="faq-arrow">⌄</span></button>
+        <div class="faq-a"><p>Non. Des capteurs de présence détectent si votre chat est à l'intérieur et bloquent automatiquement tout mouvement. La sécurité est au cœur de la conception d'OrbLitter.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quelle est la politique de retour ? <span class="faq-arrow">⌄</span></button>
+        <div class="faq-a"><p>30 jours pour changer d'avis, sans justification. Si OrbLitter ne vous convient pas, nous organisons la reprise et vous remboursons intégralement.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DANS VOTRE BOITE -->
+<section class="section" style="background:var(--cream);padding-top:40px;padding-bottom:40px">
+  <div class="section-eyebrow fade-up">Livraison incluse</div>
+  <h2 class="section-title fade-up">Ce que vous<br><em>recevrez</em></h2>
+  <div class="fade-up" style="border-radius:16px;overflow:hidden;margin-top:24px">
+    <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773399263/ChatGPT_Image_3_mars_2026_%C3%A0_14_06_55_kzbj8b.png" style="width:100%;display:block" alt="Contenu de la boîte OrbLitter">
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="guarantee-section">
+  <div class="section-eyebrow fade-up">Tranquillité d'esprit</div>
+  <h2 class="section-title fade-up">Achetez en toute <em>confiance</em></h2>
+  <div class="guarantee-cards">
+    <div class="g-card fade-up">
+      <div class="g-card-icon">🔒</div>
+      <div class="g-card-title">Paiement sécurisé</div>
+      <div class="g-card-desc">SSL & 3D Secure sur toutes les transactions</div>
+    </div>
+    <div class="g-card fade-up">
+      <div class="g-card-icon">📦</div>
+      <div class="g-card-title">Livraison offerte</div>
+      <div class="g-card-desc">Expédié sous 48h partout en France</div>
+    </div>
+    <div class="g-card fade-up">
+      <div class="g-card-icon">↩️</div>
+      <div class="g-card-title">Retours 30 jours</div>
+      <div class="g-card-desc">Remboursement complet sans question</div>
+    </div>
+    <div class="g-card fade-up">
+      <div class="g-card-icon">🛡️</div>
+      <div class="g-card-title">Garantie 2 ans</div>
+      <div class="g-card-desc">Pièces et main d'œuvre incluses</div>
+    </div>
+  </div>
+</section>
+
+<!-- REASSURANCE -->
+<section style="padding:40px 20px;background:var(--white)">
+  <div class="section-eyebrow fade-up">Achetez sans risque</div>
+  <h2 class="section-title fade-up">Essayez OrbLitter<br>pendant <em>30 jours</em></h2>
+
+  <div class="reassurance-grid" style="margin-top:24px;display:flex;flex-direction:column;gap:16px">
+    <div class="fade-up" style="background:var(--card-bg);border-radius:var(--radius);overflow:hidden">
+      <div style="height:200px;background:var(--cream);overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773399306/ChatGPT_Image_5_mars_2026_%C3%A0_17_04_04_umspzq.png" style="width:100%;height:100%;object-fit:cover;object-position:center" alt="Essayez OrbLitter 30 jours">
+      </div>
+      <div style="padding:20px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px">Essayez-le pendant 30 jours</div>
+        <div style="font-size:13.5px;line-height:1.75;color:var(--grey)">Pas convaincu ? Retournez-le dans les 30 jours pour un remboursement complet. Aucune question posée.</div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="background:var(--ink);border-radius:var(--radius);overflow:hidden">
+      <div style="padding:28px 24px;display:flex;gap:20px;align-items:flex-start">
+        <div style="flex:1">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ivory);margin-bottom:10px">Garantie 2 ans complète</div>
+          <div style="font-size:13px;line-height:1.75;color:rgba(249,246,241,0.6);margin-bottom:20px">Une couverture totale pour votre tranquillité d'esprit.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="text-align:center"><div style="font-size:22px;margin-bottom:4px">⚡</div><div style="font-size:11px;color:rgba(249,246,241,0.5);letter-spacing:0.5px">Surtensions électriques</div></div>
+            <div style="text-align:center"><div style="font-size:22px;margin-bottom:4px">🔧</div><div style="font-size:11px;color:rgba(249,246,241,0.5);letter-spacing:0.5px">Pannes mécaniques</div></div>
+            <div style="text-align:center"><div style="font-size:22px;margin-bottom:4px">⚠️</div><div style="font-size:11px;color:rgba(249,246,241,0.5);letter-spacing:0.5px">Dommages accidentels</div></div>
+            <div style="text-align:center"><div style="font-size:22px;margin-bottom:4px">🛡️</div><div style="font-size:11px;color:rgba(249,246,241,0.5);letter-spacing:0.5px">Support dédié FR</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-up" style="background:var(--card-bg);border-radius:var(--radius);overflow:hidden">
+      <div style="height:180px;background:var(--cream);overflow:hidden">
+        <img src="https://res.cloudinary.com/ddqq2abvv/image/upload/v1773399348/ChatGPT_Image_5_mars_2026_%C3%A0_17_08_06_ucm8un.png" style="width:100%;height:100%;object-fit:cover;object-position:center" alt="Livraison OrbLitter">
+      </div>
+      <div style="padding:20px">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;color:var(--ink);margin-bottom:8px">Livraison gratuite offerte</div>
+        <div style="font-size:13.5px;line-height:1.75;color:var(--grey)">Expédié sous 48h depuis la France. Suivi en temps réel inclus.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="commander">
+  <div class="section-eyebrow fade-up" style="justify-content:center">Commandez aujourd'hui</div>
+  <h2 class="section-title fade-up">Offrez à votre chat le meilleur —<br>et à votre <em>intérieur</em> son respect.</h2>
+  <div class="price-display fade-up"><sup>€</sup>349</div>
+  <p class="price-note fade-up">ou 3 × 116€ sans frais avec Klarna</p>
+  <a href="https://buy.stripe.com/bJefZhggVbWh5fReDD2Fa00" class="btn-final fade-up" target="_blank">Commander maintenant</a>
+  <div class="shipping-badges fade-up">
+    <span class="s-badge">✓ Livraison offerte</span>
+    <span class="s-badge">✓ En stock</span>
+    <span class="s-badge">✓ Support français</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">OrbLitter</div>
+    <div class="footer-links">
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="cgv.html">CGV</a>
+      <a href="confidentialite.html">Politique de confidentialité</a>
+      <a href="retours.html">Retours</a>
+      <a href="/cdn-cgi/l/email-protection#1a7975746e7b796e5a75687876736e6e7f68347c68">Contact</a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 OrbLitter · Tous droits réservés · orblitter.fr</div>
+</footer>
+
+<script>
+// Fade-up animation - JS adds animate class so elements show without JS
+document.querySelectorAll('.fade-up').forEach(el => el.classList.add('animate'));
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+setTimeout(() => {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => el.classList.add('visible'));
+}, 1000);
+
+// Room tabs
+function switchRoom(btn, room) {
+  document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+  document.querySelectorAll('.room-img').forEach(function(img) { img.classList.remove('active'); });
+  btn.classList.add('active');
+  var target = document.querySelector('.room-img[data-room="' + room + '"]');
+  if (target) target.classList.add('active');
+}
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
+});
+
+// Desktop: reassurance grid override
+function applyResponsiveLayout() {
+  const grid = document.querySelector('.reassurance-grid');
+  if (!grid) return;
+  if (window.innerWidth >= 768) {
+    grid.style.display = 'grid';
+    grid.style.gridTemplateColumns = '1fr 1fr 1fr';
+    grid.style.flexDirection = '';
+  } else {
+    grid.style.display = 'flex';
+    grid.style.flexDirection = 'column';
+    grid.style.gridTemplateColumns = '';
+  }
+  const howSection = document.querySelector('.how-section');
+  if (howSection) {
+    if (window.innerWidth >= 768) {
+      howSection.style.padding = '80px 80px';
+    } else {
+      howSection
